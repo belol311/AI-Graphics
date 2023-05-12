@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,8 @@
   <title>Attendance</title>
   <script defer src="face-api.min.js"></script>
   <script defer src="script.js"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
   <style>
     body {
       margin: 0;
@@ -16,43 +19,48 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      
+
     }
 
     canvas {
-      position: absolute;
+      position: relative;
+      bottom: 4px;
+      right: 845px;
+
     }
 
-    input{
+    button {
       position: relative;
       top: 300px;
-      right: 1000px;
+      right: 700px;
     }
 
-    button{
-      position: relative;
-      top: 300px;
-      right: 1000px;
-    }
   </style>
 </head>
 <body>
   <video id="video" width="720" height="560" autoplay muted></video>
-  <input type="file" id="이미지 선택" accept="imgae/*">
-  <button onclick="add_user()">사용자 등록</button>
-  <img src="" id="uploadImage">
-<script>
-  function add_user(){
-    $("#uploadImage").on("change", function(event){
-      var file = event.target.files[0];
-      var reader = new FileReader();
-      reader.onload = funtion(e){
-        $("preview").attr("src", e.target.result);
-      }
-      reader.readAsDataURL(file);
-    });
-  }
-</script>
-
+  <button onclick="attandence()">출석</button>
+  <button id="shot">사용자 등록</button>
 </body>
+<script>
+  $(function(){
+    $("#shot").on("click", function(){
+      html2canvas(document.querySelector("#video")).then(canvas => {
+				saveAs(canvas.toDataURL('image/png'),"new user.png");
+			});
+    });
+    function saveAs(uri, filename) { 
+      var link = document.createElement('a'); 
+      if (typeof link.download === 'string') {
+        link.href = uri; 
+        link.download = filename; 
+        document.body.appendChild(link); 
+        link.click(); 
+        document.body.removeChild(link); 
+      } else { 
+        window.open(uri); 
+      } 
+    }
+  });
+</script>
 </html>
