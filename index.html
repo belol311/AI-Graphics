@@ -8,40 +8,53 @@
   <title>Attendance</title>
   <script defer src="face-api.min.js"></script>
   <script defer src="script.js"></script>
+  <script src="js/faceDetectionControls.js"></script>
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+  
   <style>
     body {
-      margin: 0;
-      padding: 0;
-      width: 100vw;
-      height: 100vh;
+      margin: 10;
+      padding: 50px;
+      width: 200vw;
+      height: 200vh;
       display: flex;
-      justify-content: center;
-      align-items: center;
-
+      justify-content: flex-start;
+      align-items: flex-start;
     }
 
     canvas {
-      position: relative;
-      bottom: 4px;
-      right: 845px;
-
+      position: absolute;
     }
 
-    button {
-      position: relative;
-      top: 300px;
-      right: 700px;
+    div {
+      position:absolute;
+      top: 60px;;
+      left: 810px;
+    }
+
+    #capture{
+      position:absolute;
+      top: 700px;
+      left: 410px;
+    }
+
+    #shot{
+      position:absolute;
+      top:700px;
+      left: 470px;
     }
 
   </style>
 </head>
 <body>
   <video id="video" width="720" height="560" autoplay muted></video>
-  <button onclick="attandence()">출석</button>
+  <button id="capture">출석</button>
   <button id="shot">사용자 등록</button>
 </body>
+
+<div id="img"></div>
+
 <script>
   $(function(){
     $("#shot").on("click", function(){
@@ -61,6 +74,17 @@
         window.open(uri); 
       } 
     }
+  });
+  document.wirte(label)
+</script>
+
+<script>
+  $(function(){
+    $("#capture").click(function(){
+      html2canvas($("#video").get(0)).then(function(canvas){
+        document.getElementById('img').appendChild(canvas)
+      });
+    });
   });
 </script>
 </html>
