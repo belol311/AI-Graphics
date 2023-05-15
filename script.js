@@ -21,7 +21,7 @@ function startWebcam() {
 }
 
 function getLabeledFaceDescriptions() {
-  const labels = ["K", "P", "C_20181132"];
+  const labels = ["K_20201102", "P_20181109", "C_20181132"];
   return Promise.all(
     labels.map(async (label) => {
       const descriptions = [];
@@ -77,9 +77,18 @@ video.addEventListener("play", async () => {
 
 function attendance(){
   const studentInfo = result2[0]['label'].split('_');
-  const date = new Date();
   const studentName = studentInfo[0];
   const studentId = studentInfo[1];
+  const check = 'O'
+
+  $.ajax({
+    url:`http://127.0.0.1:8000/insert/${studentId}/${studentName}/${check}`,
+    type:'GET',
+    error: function(error){
+      console.log("check error");
+      console.log(error);
+    }
+  })
 
   console.log(date);
   console.log(studentName);
