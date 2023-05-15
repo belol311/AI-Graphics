@@ -1,5 +1,5 @@
 const video = document.getElementById("video");
-
+let resutl2;
 Promise.all([
   faceapi.nets.ssdMobilenetv1.loadFromUri("/models"),
   faceapi.nets.faceRecognitionNet.loadFromUri("/models"),
@@ -21,7 +21,7 @@ function startWebcam() {
 }
 
 function getLabeledFaceDescriptions() {
-  const labels = ["K", "P", "C"];
+  const labels = ["K", "P", "C_20181132"];
   return Promise.all(
     labels.map(async (label) => {
       const descriptions = [];
@@ -55,12 +55,15 @@ video.addEventListener("play", async () => {
       .withFaceDescriptors();
 
     const resizedDetections = faceapi.resizeResults(detections, displaySize);
-
+    
     canvas.getContext("2d").clearRect(0, 0, canvas.width, canvas.height);
 
     const results = resizedDetections.map((d) => {
       return faceMatcher.findBestMatch(d.descriptor);
     });
+    result2 = results;
+    console.log(results);
+
     results.forEach((result, i) => {
       const box = resizedDetections[i].detection.box;
       const drawBox = new faceapi.draw.DrawBox(box, {
@@ -69,4 +72,17 @@ video.addEventListener("play", async () => {
       drawBox.draw(canvas);
     });
   }, 100);
+
 });
+
+function attendance(){
+  const studentInfo = result2[0]['label'].split('_');
+  const date = new Date();
+  const studentName = studentInfo[0];
+  const studentId = studentInfo[1];
+
+  console.log(date);
+  console.log(studentName);
+  console.log(studentId);
+
+}

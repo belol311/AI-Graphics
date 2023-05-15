@@ -26,7 +26,7 @@
       position: absolute;
     }
 
-    #capture{
+    #attendance{
       position:absolute;
       top: 700px;
       left: 110px;
@@ -38,56 +38,27 @@
       left: 170px;
     }
 
-    #studentID{
+    #userName{
       position: absolute;
-      top: 700px;
-      left:850px;
-    }
-
-    #studentIDinput{
-      position: absolute;
-      top: 700px;
-      left:890px;
-    }
-    #name{
-      position: absolute;
-      top: 700px;
-      left:1060px;
-    }
-    #nameinput{
-      position: absolute;
-      top: 700px;
-      left:1100px;
-    }
-
-    #inputImformation{
-      position: absolute;
-      top: 700px;
-      left:1300px;
-    }
-
-    .adduser{
-      visibility: hidden;
+      top : 700px;
+      left : 280px;
     }
 
   </style>
 </head>
 <body>
   <video id="video" width="720" height="560" autoplay muted></video>
-  <button id="capture">출석</button>
+  <button id="attendance" onclick="attendance()">출석</button>
   <button id="shot" onclick="show()">사용자 등록</button>
-  <label for="studentID" id="studentID" class="adduser">학번 </label>
-    <input type="text" id="studentIDinput" class="adduser"/><br/>
-  <label for="name" id="name" class="adduser">이름 </label>
-    <input type="text" id="nameinput" class="adduser"/>
-  <button id="inputImformation" class="adduser" onclick="rehidden()">입력 완료</button>
+  <input type="text" id="userName"></input>
 </body>
 
 <script>
   $(function(){
     $("#shot").on("click", function(){
       html2canvas(document.querySelector("#video")).then(canvas => {
-				saveAs(canvas.toDataURL('image/png'),"new user.png");
+        const userName = document.querySelector('#userName').value;
+				saveAs(canvas.toDataURL('image/png'),`${userName}.png`);
 			});
     });
     function saveAs(uri, filename) { 
@@ -105,21 +76,4 @@
   });
 </script>
 
-<script>
-  function show(){
-    const adduser = document.getElementsByClassName('adduser')[0];
-
-    if(adduser[0].style.visibility !== 'visible'){
-      adduser[0].style.visibility = 'visible';
-    }
-    
-  }
-  function rehidden(){
-    const adduser = document.getElementsByClassName('adduser');
-
-    if(adduser.style.visibility !== 'hidden'){
-      adduser.style.visibility = 'hidden';
-    }
-  }
-</script>
 </html>
