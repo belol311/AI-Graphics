@@ -8,7 +8,6 @@
   <title>Attendance</title>
   <script defer src="face-api.min.js"></script>
   <script defer src="script.js"></script>
-  <script src="js/faceDetectionControls.js"></script>
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
   
@@ -27,22 +26,48 @@
       position: absolute;
     }
 
-    div {
-      position:absolute;
-      top: 60px;;
-      left: 810px;
-    }
-
     #capture{
       position:absolute;
       top: 700px;
-      left: 410px;
+      left: 110px;
     }
 
     #shot{
       position:absolute;
       top:700px;
-      left: 470px;
+      left: 170px;
+    }
+
+    #studentID{
+      position: absolute;
+      top: 700px;
+      left:850px;
+    }
+
+    #studentIDinput{
+      position: absolute;
+      top: 700px;
+      left:890px;
+    }
+    #name{
+      position: absolute;
+      top: 700px;
+      left:1060px;
+    }
+    #nameinput{
+      position: absolute;
+      top: 700px;
+      left:1100px;
+    }
+
+    #inputImformation{
+      position: absolute;
+      top: 700px;
+      left:1300px;
+    }
+
+    .adduser{
+      visibility: hidden;
     }
 
   </style>
@@ -50,10 +75,13 @@
 <body>
   <video id="video" width="720" height="560" autoplay muted></video>
   <button id="capture">출석</button>
-  <button id="shot">사용자 등록</button>
+  <button id="shot" onclick="show()">사용자 등록</button>
+  <label for="studentID" id="studentID" class="adduser">학번 </label>
+    <input type="text" id="studentIDinput" class="adduser"/><br/>
+  <label for="name" id="name" class="adduser">이름 </label>
+    <input type="text" id="nameinput" class="adduser"/>
+  <button id="inputImformation" class="adduser" onclick="rehidden()">입력 완료</button>
 </body>
-
-<div id="img"></div>
 
 <script>
   $(function(){
@@ -75,16 +103,23 @@
       } 
     }
   });
-  document.wirte(label)
 </script>
 
 <script>
-  $(function(){
-    $("#capture").click(function(){
-      html2canvas($("#video").get(0)).then(function(canvas){
-        document.getElementById('img').appendChild(canvas)
-      });
-    });
-  });
+  function show(){
+    const adduser = document.getElementsByClassName('adduser')[0];
+
+    if(adduser[0].style.visibility !== 'visible'){
+      adduser[0].style.visibility = 'visible';
+    }
+    
+  }
+  function rehidden(){
+    const adduser = document.getElementsByClassName('adduser');
+
+    if(adduser.style.visibility !== 'hidden'){
+      adduser.style.visibility = 'hidden';
+    }
+  }
 </script>
 </html>
